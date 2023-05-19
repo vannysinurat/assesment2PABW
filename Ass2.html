@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NBP Gold Prices</title>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			// Inisialisasi DataTable
+			$('#goldPricesTable').DataTable({
+				ajax: {
+					url: 'http://api.nbp.pl/api/cenyzlota/last/30/?format=json',
+					dataSrc: ''
+				},
+				columns: [
+					{ data: 'data' },
+					{ data: 'cena' }
+				]
+			});
+
+			// Event listener untuk submit form
+			$('form').submit(function(e) {
+				e.preventDefault();
+				var date = $('#date').val();
+				var price = $('#price').val();
+
+				// Validasi form
+				if (date === '') {
+					alert('Tanggal harus diisi');
+					return;
+				}
+
+				if (price === '') {
+					alert('Harga harus diisi');
+					return;
+				}
+
+				// Lakukan operasi yang diinginkan dengan data date dan price
+				console.log('Date:', date);
+				console.log('Price:', price);
+
+				// Clear form setelah submit
+				$('#date').val('');
+				$('#price').val('');
+			});
+		});
+	</script>
+</head>
+<body>
+	<h1>NBP Gold Prices</h1>
+	<form>
+		<label for="date">Date:</label>
+		<input type="text" id="date" name="date">
+
+		<label for="price">Price:</label>
+		<input type="text" id="price" name="price">
+
+		<button type="submit">Submit</button>
+	</form>
+	<table id="goldPricesTable" class="display" style="width:100%">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</body>
+</html>
